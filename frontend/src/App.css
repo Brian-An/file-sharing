@@ -83,6 +83,17 @@ h1 {
   text-decoration: underline;
 }
 
+.copy-button {
+  background-color: #4a6cf7;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+}
+
+.copy-button:hover {
+  background-color: #3a5ce5;
+}
+
 h3 {
   color: #10b981;
   margin-bottom: 1rem;

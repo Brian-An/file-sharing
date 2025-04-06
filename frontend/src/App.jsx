@@ -30,6 +30,12 @@ function App() {
     }
   };
 
+  const handleCopy = () => {
+    if (downloadUrl) {
+      navigator.clipboard.writeText(downloadUrl);
+    }
+  };
+
   useEffect(() => {
     const uploadFile = async () => {
       if (file) {
@@ -103,6 +109,9 @@ function App() {
           <h3>Your file is ready!</h3>
           <button className="download-button" onClick={handleDownload}>
             Download File
+          </button>
+          <button className="copy-button" onClick={handleCopy}>
+            Copy
           </button>
           <p className="download-url">
             Or copy this link: <a href={downloadUrl}>{downloadUrl}</a>
