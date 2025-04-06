@@ -64,7 +64,8 @@ function App() {
 
   return (
     <div className="container">
-      <h1>File Sharing App</h1>
+      <h1>File Transfer</h1>
+      <p>Upload a file to get a download link</p>
 
       <div className="upload-section">
         <button
