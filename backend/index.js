@@ -9,14 +9,21 @@ dotenv.config();
 
 const app = express();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 9000;
 
 app.use(cors());
-app.use("/", router);
+app.use(express.json());
+
+// API routes
+app.use("/api", router);
 
 const __dirname = path.resolve();
 
+// Serve static files from the React app
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/frontend/dist", "index.html"));
 });

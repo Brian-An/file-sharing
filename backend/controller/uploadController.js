@@ -12,15 +12,15 @@ export const UploadController = async (req, res) => {
     const file = await fileModel.create(fileObject);
     console.log(file);
 
-    // Ensure BACKEND_URL is properly formatted
-    const backendUrl = process.env.BACKEND_URL || "";
-    // Remove trailing slash if present to avoid double slashes
-    const cleanBackendUrl = backendUrl.endsWith("/")
-      ? backendUrl.slice(0, -1)
-      : backendUrl;
+    // Get the base URL from the request or environment variable
+    const baseUrl =
+      process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
+
+    // Ensure the URL is properly formatted
+    const cleanBaseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
 
     return res.status(200).json({
-      path: `${cleanBackendUrl}/files/${file._id}`,
+      path: `${cleanBaseUrl}/api/files/${file._id}`,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -35,8 +35,14 @@ export const DownloadController = async (req, res) => {
       return res.status(404).json({ message: "file not found" });
     }
 
-    res.download(file.path, file.name);
+    // Set appropriate headers for file download
+    res.setHeader("Content-Disposition", `attachment; filename="${file.name}"`);
+    res.setHeader("Content-Type", "application/octet-stream");
+
+    // Send the file
+    res.sendFile(file.path, { root: "." });
   } catch (error) {
+    console.error("Download error:", error);
     return res.status(500).json({ message: error.message });
   }
 };
