@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { UploadFile } from "./service/api";
+import { FaCopy } from "react-icons/fa";
 
 function App() {
   const [file, setFile] = useState(null);
@@ -8,6 +9,7 @@ function App() {
   const [fileName, setFileName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState(null);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const uploadRef = useRef();
 
@@ -30,9 +32,17 @@ function App() {
     }
   };
 
-  const handleCopy = () => {
+  const handleCopyLink = () => {
     if (downloadUrl) {
-      navigator.clipboard.writeText(downloadUrl);
+      navigator.clipboard
+        .writeText(downloadUrl)
+        .then(() => {
+          setCopySuccess(true);
+          setTimeout(() => setCopySuccess(false), 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+        });
     }
   };
 
@@ -70,8 +80,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>File Transfer</h1>
-      <p>Upload a file to get a download link</p>
+      <h1>File Sharing App</h1>
 
       <div className="upload-section">
         <button
@@ -110,12 +119,18 @@ function App() {
           <button className="download-button" onClick={handleDownload}>
             Download File
           </button>
-          <button className="copy-button" onClick={handleCopy}>
-            Copy
-          </button>
-          <p className="download-url">
-            Or copy this link: <a href={downloadUrl}>{downloadUrl}</a>
-          </p>
+          <div className="link-container">
+            <button
+              className="copy-button"
+              onClick={handleCopyLink}
+              title="Copy to clipboard"
+            >
+              <FaCopy /> {copySuccess ? "Copied!" : "Copy"}
+            </button>
+            <p className="download-url">
+              <a href={downloadUrl}>{downloadUrl}</a>
+            </p>
+          </div>
         </div>
       )}
     </div>

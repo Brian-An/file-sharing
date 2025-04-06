@@ -69,9 +69,20 @@ h1 {
   border-radius: 4px;
 }
 
-.download-url {
+.link-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.download-url {
+  margin: 0;
   word-break: break-all;
+  flex: 1;
+  min-width: 200px;
 }
 
 .download-url a {
@@ -84,14 +95,27 @@ h1 {
 }
 
 .copy-button {
-  background-color: #4a6cf7;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .copy-button:hover {
-  background-color: #3a5ce5;
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+.copy-button svg {
+  font-size: 1rem;
 }
 
 h3 {
