@@ -12,15 +12,11 @@ export const UploadController = async (req, res) => {
     const file = await fileModel.create(fileObject);
     console.log(file);
 
-    // Get the base URL from the request or environment variable
-    const baseUrl =
-      process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
-
-    // Ensure the URL is properly formatted
-    const cleanBaseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+    // Use a simple string for the URL to avoid path-to-regexp issues
+    const fileId = file._id.toString();
 
     return res.status(200).json({
-      path: `${cleanBaseUrl}/api/files/${file._id}`,
+      path: `/api/files/${fileId}`,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });

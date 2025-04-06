@@ -14,8 +14,13 @@ const PORT = process.env.PORT || 9000;
 app.use(cors());
 app.use(express.json());
 
-// API routes
-app.use("/api", router);
+// Define API routes directly to avoid path-to-regexp issues
+app.post(
+  "/api/upload",
+  router.stack[0].route.stack[1].handle,
+  router.stack[0].route.stack[2].handle
+);
+app.get("/api/files/:fileId", router.stack[1].route.stack[0].handle);
 
 const __dirname = path.resolve();
 

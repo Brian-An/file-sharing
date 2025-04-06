@@ -7,7 +7,14 @@ export const UploadFile = async (fileData) => {
         body: fileData,
       }
     );
-    return response.json();
+    const data = await response.json();
+
+    // If the path is relative, prepend the backend URL
+    if (data.path && data.path.startsWith("/")) {
+      data.path = `${import.meta.env.VITE_BACKEND_URL}${data.path}`;
+    }
+
+    return data;
   } catch (error) {
     console.log("Error while calling upload file api", error.message);
   }
