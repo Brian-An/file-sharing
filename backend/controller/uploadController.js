@@ -11,8 +11,16 @@ export const UploadController = async (req, res) => {
     };
     const file = await fileModel.create(fileObject);
     console.log(file);
+
+    // Ensure BACKEND_URL is properly formatted
+    const backendUrl = process.env.BACKEND_URL || "";
+    // Remove trailing slash if present to avoid double slashes
+    const cleanBackendUrl = backendUrl.endsWith("/")
+      ? backendUrl.slice(0, -1)
+      : backendUrl;
+
     return res.status(200).json({
-      path: `${process.env.BACKEND_URL}/files/${file._id}`,
+      path: `${cleanBackendUrl}/files/${file._id}`,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
