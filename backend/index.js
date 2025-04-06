@@ -1,6 +1,10 @@
 import express from "express";
 import Connection from "./database/db.js";
-import router from "./routes/api.js";
+import {
+  UploadController,
+  DownloadController,
+} from "./controller/uploadController.js";
+import storage from "./middleware/upload.js";
 import cors from "cors";
 import path from "path";
 import dotenv from "dotenv";
@@ -14,13 +18,9 @@ const PORT = process.env.PORT || 9000;
 app.use(cors());
 app.use(express.json());
 
-// Define API routes directly to avoid path-to-regexp issues
-app.post(
-  "/api/upload",
-  router.stack[0].route.stack[1].handle,
-  router.stack[0].route.stack[2].handle
-);
-app.get("/api/files/:fileId", router.stack[1].route.stack[0].handle);
+// Define API routes directly
+app.post("/api/upload", storage.single("file"), UploadController);
+app.get("/api/files/:fileId", DownloadController);
 
 const __dirname = path.resolve();
 

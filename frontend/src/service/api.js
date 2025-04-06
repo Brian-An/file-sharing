@@ -7,6 +7,12 @@ export const UploadFile = async (fileData) => {
         body: fileData,
       }
     );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Upload failed");
+    }
+
     const data = await response.json();
 
     // If the path is relative, prepend the backend URL
@@ -16,6 +22,7 @@ export const UploadFile = async (fileData) => {
 
     return data;
   } catch (error) {
-    console.log("Error while calling upload file api", error.message);
+    console.error("Error while calling upload file api:", error.message);
+    throw error; // Re-throw to handle in the component
   }
 };
