@@ -1,13 +1,58 @@
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* App Container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h1 {
+/* Header Styles */
+.app-header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+  color: #4a6cf7;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
   color: #333;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  color: #666;
   margin-bottom: 2rem;
 }
 
@@ -20,38 +65,99 @@ h1 {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.upload-button,
-.download-button {
-  background-color: #4a6cf7;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
+.drop-zone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f8fafc;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, border-color, background-color;
 }
 
-.upload-button:hover,
-.download-button:hover {
-  background-color: #3a5ce5;
+.drop-zone:hover {
+  border-color: #4a6cf7;
+  background-color: #f1f5f9;
 }
 
-.upload-button:disabled {
-  background-color: #a0aec0;
-  cursor: not-allowed;
+.drop-zone.dragging {
+  border-color: #10b981;
+  background-color: #ecfdf5;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  }
+  100% {
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+  }
+}
+
+.drop-zone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  pointer-events: none; /* This prevents child elements from interfering with drag events */
+}
+
+.upload-icon {
+  font-size: 3rem;
+  color: #94a3b8;
+  transition: all 0.3s ease;
+}
+
+.drop-zone:hover .upload-icon {
+  color: #4a6cf7;
+  transform: translateY(-5px);
+}
+
+.drop-zone.dragging .upload-icon {
+  color: #10b981;
+  transform: scale(1.1);
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+.drop-zone p {
+  margin: 0;
+  color: #64748b;
+  font-size: 1.1rem;
 }
 
 .download-button {
   background-color: #10b981;
-  font-weight: bold;
+  color: white;
+  border: none;
   padding: 1rem 2rem;
+  border-radius: 4px;
   font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
 }
 
 .download-button:hover {
   background-color: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .file-info {
@@ -121,4 +227,62 @@ h1 {
 h3 {
   color: #10b981;
   margin-bottom: 1rem;
+}
+
+/* Footer Styles */
+.app-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e2e8f0;
+  padding: 1.5rem 0;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-content p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #4a6cf7;
+}
+
+.sub-header {
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
 }
