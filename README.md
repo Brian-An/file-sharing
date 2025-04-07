@@ -2,6 +2,8 @@
 
 DropLink is a modern, user-friendly file sharing application that allows users to easily upload files and share them via generated links. Built with React for the frontend and Express.js for the backend, DropLink provides a seamless experience for file sharing.
 
+![Image](https://github.com/user-attachments/assets/1a979258-c64e-4a00-9ced-05c5587a510d)
+
 ## Features
 
 - **Drag & Drop Upload**: Intuitive drag-and-drop interface for file uploads
